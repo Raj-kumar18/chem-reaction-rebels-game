@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Gamepad, Trophy, Zap, Calendar, BarChart3, Settings } from 'lucide-react';
+import { Gamepad, Trophy, Zap, Calendar, BarChart3, Settings, Clock } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import GameBoard from '@/components/GameBoard';
 import ScoreBoard from '@/components/ScoreBoard';
@@ -18,17 +19,17 @@ import { achievements, Achievement } from '@/data/achievements';
 import { gameModes, GameMode } from '@/data/gameModes';
 
 const Index = () => {
-  const [currentView, setCurrentView<'menu' | 'modes' | 'game' | 'stats'>('menu');
-  const [selectedGameMode, setSelectedGameMode<GameMode | null>(null);
-  const [currentScore, setCurrentScore(0);
-  const [streak, setStreak(0);
-  const [showMeme, setShowMeme(false);
-  const [currentMeme, setCurrentMeme('');
-  const [userAchievements, setUserAchievements<Achievement[]>(achievements);
-  const [categoryStats, setCategoryStats<Record<string, number>>({});
-  const [totalXP, setTotalXP(150);
-  const [gamesPlayed, setGamesPlayed(12);
-  const [showReaction, setShowReaction(false);
+  const [currentView, setCurrentView] = useState<'menu' | 'modes' | 'game' | 'stats'>('menu');
+  const [selectedGameMode, setSelectedGameMode] = useState<GameMode | null>(null);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [showMeme, setShowMeme] = useState(false);
+  const [currentMeme, setCurrentMeme] = useState('');
+  const [userAchievements, setUserAchievements] = useState<Achievement[]>(achievements);
+  const [categoryStats, setCategoryStats] = useState<Record<string, number>>({});
+  const [totalXP, setTotalXP] = useState(150);
+  const [gamesPlayed, setGamesPlayed] = useState(12);
+  const [showReaction, setShowReaction] = useState(false);
   
   // Sample reaction data
   const sampleReaction = {
@@ -61,7 +62,7 @@ const Index = () => {
     ]
   };
 
-  const [powerUps, setPowerUps([
+  const [powerUps, setPowerUps] = useState([
     {
       id: 'skip',
       name: 'Skip Question',
