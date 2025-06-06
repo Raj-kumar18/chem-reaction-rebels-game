@@ -1,4 +1,3 @@
-
 export interface Question {
   id: number;
   question: string;
@@ -8,6 +7,7 @@ export interface Question {
   topic: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   image?: string;
+  reactionType?: string;
 }
 
 export const questionBank: Question[] = [
@@ -23,7 +23,8 @@ export const questionBank: Question[] = [
     correctAnswer: "1-bromo-2-methylpropane",
     explanation: "In the presence of peroxides, HBr addition follows anti-Markovnikov's rule due to free radical mechanism. The bromine attaches to the less substituted carbon.",
     topic: "Alkene Reactions",
-    difficulty: "Medium"
+    difficulty: "Medium",
+    reactionType: "Free Radical Addition"
   },
   {
     id: 2,
@@ -51,7 +52,8 @@ export const questionBank: Question[] = [
     correctAnswer: "Acetophenone is formed",
     explanation: "This is Friedel-Crafts acylation. CH₃COCl (acetyl chloride) introduces an acetyl group into benzene forming acetophenone (C₆H₅COCH₃).",
     topic: "Aromatic Reactions",
-    difficulty: "Medium"
+    difficulty: "Medium",
+    reactionType: "Friedel-Crafts Acylation"
   },
   {
     id: 4,
@@ -79,7 +81,8 @@ export const questionBank: Question[] = [
     correctAnswer: "Dibutyl ether",
     explanation: "At 140°C, alcohols undergo intermolecular dehydration to form ethers. Two molecules of 1-butanol lose H₂O to form dibutyl ether.",
     topic: "Alcohol Reactions",
-    difficulty: "Medium"
+    difficulty: "Medium",
+    reactionType: "Dehydration"
   },
   {
     id: 6,
@@ -107,7 +110,8 @@ export const questionBank: Question[] = [
     correctAnswer: "Cyclohexane-1,2-diol",
     explanation: "OsO₄ followed by NaHSO₃ is a syn-dihydroxylation reaction that adds two OH groups on the same side of the alkene to form a diol.",
     topic: "Alkene Reactions",
-    difficulty: "Hard"
+    difficulty: "Hard",
+    reactionType: "Dihydroxylation"
   },
   {
     id: 8,
@@ -149,7 +153,8 @@ export const questionBank: Question[] = [
     correctAnswer: "Aqueous KOH",
     explanation: "Aqueous KOH provides OH⁻ ions which perform nucleophilic substitution on alkyl halides to form alcohols. Alcoholic KOH promotes elimination.",
     topic: "Alkyl Halide Reactions",
-    difficulty: "Easy"
+    difficulty: "Easy",
+    reactionType: "Nucleophilic Substitution"
   },
   {
     id: 11,
@@ -360,5 +365,153 @@ export const questionBank: Question[] = [
     explanation: "CH₃ group in toluene shows +I effect (activating), while Cl in chlorobenzene shows -I effect (deactivating). Activating groups increase reactivity.",
     topic: "Aromatic Reactions",
     difficulty: "Medium"
+  },
+  {
+    id: 26,
+    question: "What is the major product when ethyne reacts with dil. H₂SO₄ in the presence of HgSO₄?",
+    options: [
+      "Ethanol",
+      "Acetaldehyde",
+      "Acetic acid",
+      "Ethyl acetate"
+    ],
+    correctAnswer: "Acetaldehyde",
+    explanation: "This is hydration of alkynes. Ethyne adds water across the triple bond to form vinyl alcohol (enol), which tautomerizes to acetaldehyde (keto form).",
+    topic: "Alkyne Reactions",
+    difficulty: "Hard",
+    reactionType: "Hydration"
+  },
+  {
+    id: 27,
+    question: "Which mechanism operates in the reaction of (CH₃)₃CBr with OH⁻?",
+    options: [
+      "SN1",
+      "SN2",
+      "E1",
+      "E2"
+    ],
+    correctAnswer: "SN1",
+    explanation: "Tertiary alkyl halides preferentially undergo SN1 mechanism due to the formation of stable tertiary carbocations. The reaction is unimolecular.",
+    topic: "GOC - Reaction Mechanisms",
+    difficulty: "Medium",
+    reactionType: "Nucleophilic Substitution"
+  },
+  {
+    id: 28,
+    question: "What happens when propene reacts with B₂H₆ followed by H₂O₂/OH⁻?",
+    options: [
+      "1-propanol",
+      "2-propanol",
+      "Propanal",
+      "Propanone"
+    ],
+    correctAnswer: "1-propanol",
+    explanation: "This is hydroboration-oxidation. The reaction follows anti-Markovnikov addition, giving 1-propanol as the major product.",
+    topic: "Alkene Reactions",
+    difficulty: "Hard",
+    reactionType: "Hydroboration-Oxidation"
+  },
+  {
+    id: 29,
+    question: "Which compound will decolorize bromine water fastest?",
+    options: [
+      "Cyclohexane",
+      "Benzene",
+      "Cyclohexene",
+      "Toluene"
+    ],
+    correctAnswer: "Cyclohexene",
+    explanation: "Cyclohexene has a C=C double bond which readily adds Br₂ across the double bond, decolorizing bromine water. Alkanes and aromatic compounds don't react.",
+    topic: "Alkene Reactions",
+    difficulty: "Easy",
+    reactionType: "Addition"
+  },
+  {
+    id: 30,
+    question: "What is the correct order of acidity for the following compounds?",
+    options: [
+      "H-C≡C-H > CH₃CH₂OH > H₂O > CH₃CH₃",
+      "CH₃CH₃ > CH₃CH₂OH > H₂O > H-C≡C-H",
+      "H₂O > CH₃CH₂OH > H-C≡C-H > CH₃CH₃",
+      "CH₃CH₂OH > H₂O > H-C≡C-H > CH₃CH₃"
+    ],
+    correctAnswer: "H-C≡C-H > CH₃CH₂OH > H₂O > CH₃CH₃",
+    explanation: "Terminal alkynes are most acidic due to sp hybridization (50% s-character), followed by alcohols, then water, and alkanes are least acidic.",
+    topic: "GOC - Acidity",
+    difficulty: "Hard"
+  },
+  {
+    id: 31,
+    question: "What is formed when cyclohexene reacts with cold, dilute KMnO₄?",
+    options: [
+      "Cyclohexanol",
+      "Cyclohexane-1,2-diol",
+      "Cyclohexanone",
+      "Adipic acid"
+    ],
+    correctAnswer: "Cyclohexane-1,2-diol",
+    explanation: "Cold, dilute KMnO₄ causes syn-dihydroxylation of alkenes, adding two OH groups on the same side of the double bond to form 1,2-diols.",
+    topic: "Alkene Reactions",
+    difficulty: "Medium",
+    reactionType: "Dihydroxylation"
+  },
+  {
+    id: 32,
+    question: "Which of the following undergoes fastest SN2 reaction?",
+    options: [
+      "CH₃I",
+      "(CH₃)₂CHI",
+      "(CH₃)₃CI",
+      "CH₃CH₂I"
+    ],
+    correctAnswer: "CH₃I",
+    explanation: "SN2 reactions are faster with less substituted carbon centers due to less steric hindrance. Methyl iodide has the least steric hindrance.",
+    topic: "GOC - Reaction Mechanisms",
+    difficulty: "Medium",
+    reactionType: "Nucleophilic Substitution"
+  },
+  {
+    id: 33,
+    question: "What is the major product when 2-methyl-2-butene reacts with HBr?",
+    options: [
+      "2-bromo-2-methylbutane",
+      "2-bromo-3-methylbutane",
+      "1-bromo-2-methylbutane",
+      "3-bromo-2-methylbutane"
+    ],
+    correctAnswer: "2-bromo-2-methylbutane",
+    explanation: "HBr addition follows Markovnikov's rule. H⁺ adds to the less substituted carbon (C-3) and Br⁻ adds to the more substituted carbon (C-2).",
+    topic: "Alkene Reactions",
+    difficulty: "Medium",
+    reactionType: "Electrophilic Addition"
+  },
+  {
+    id: 34,
+    question: "Which reaction is used to convert benzene to nitrobenzene?",
+    options: [
+      "Friedel-Crafts alkylation",
+      "Friedel-Crafts acylation",
+      "Nitration",
+      "Sulfonation"
+    ],
+    correctAnswer: "Nitration",
+    explanation: "Nitration involves treating benzene with a mixture of concentrated HNO₃ and H₂SO₄ to introduce the nitro group (-NO₂) into the benzene ring.",
+    topic: "Aromatic Reactions",
+    difficulty: "Easy",
+    reactionType: "Electrophilic Substitution"
+  },
+  {
+    id: 35,
+    question: "What type of hybridization is present in allene (H₂C=C=CH₂)?",
+    options: [
+      "All carbons are sp² hybridized",
+      "All carbons are sp hybridized",
+      "Central carbon is sp, terminal carbons are sp²",
+      "Central carbon is sp², terminal carbons are sp"
+    ],
+    correctAnswer: "Central carbon is sp, terminal carbons are sp²",
+    explanation: "In allene, the central carbon has two double bonds (linear geometry, sp hybridized) while terminal carbons each have one double bond (trigonal planar, sp² hybridized).",
+    topic: "Hybridization",
+    difficulty: "Hard"
   }
 ];

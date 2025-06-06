@@ -1,15 +1,14 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { Timer, CheckCircle, XCircle } from 'lucide-react';
+import { Timer, CheckCircle, XCircle, Beaker, Zap } from 'lucide-react';
 import { questionBank, Question } from '@/data/questionBank';
 import { memes } from '@/data/memes';
 
 interface GameBoardProps {
-  onCorrectAnswer: (points: number) => void;
+  onCorrectAnswer: (points: number, category: string) => void;
   onWrongAnswer: (meme: string) => void;
   currentStreak: number;
 }
@@ -38,7 +37,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ onCorrectAnswer, onWrongAnswer, c
   const loadNewQuestion = () => {
     const availableQuestions = questionBank.filter((_, index) => !answeredQuestions.has(index));
     if (availableQuestions.length === 0) {
-      // Reset if all questions answered
       setAnsweredQuestions(new Set());
       setCurrentQuestion(questionBank[Math.floor(Math.random() * questionBank.length)]);
     } else {
@@ -69,7 +67,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ onCorrectAnswer, onWrongAnswer, c
       const totalPoints = basePoints + streakBonus;
       
       setTimeout(() => {
-        onCorrectAnswer(totalPoints);
+        onCorrectAnswer(totalPoints, currentQuestion.topic);
         nextQuestion();
       }, 2000);
     } else {
@@ -136,6 +134,12 @@ const GameBoard: React.FC<GameBoardProps> = ({ onCorrectAnswer, onWrongAnswer, c
               {currentQuestion.difficulty}
             </Badge>
             <Badge variant="secondary">{currentQuestion.topic}</Badge>
+            {currentQuestion.reactionType && (
+              <Badge variant="outline" className="bg-purple-50 text-purple-700">
+                <Beaker className="h-3 w-3 mr-1" />
+                {currentQuestion.reactionType}
+              </Badge>
+            )}
           </div>
           <div className="flex items-center space-x-2">
             <Timer className="h-4 w-4" />
@@ -185,20 +189,32 @@ const GameBoard: React.FC<GameBoardProps> = ({ onCorrectAnswer, onWrongAnswer, c
         </div>
 
         {!showResult && (
-          <Button 
-            onClick={handleSubmit} 
-            disabled={!selectedAnswer}
-            className="w-full"
-          >
-            Submit Answer
-          </Button>
+          <div className="flex space-x-3">
+            <Button 
+              onClick={handleSubmit} 
+              disabled={!selectedAnswer}
+              className="flex-1"
+            >
+              Submit Answer
+            </Button>
+          </div>
         )}
 
         {showResult && (
-          <Card className="bg-gray-50">
+          <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-l-blue-500">
             <CardContent className="pt-6">
-              <h3 className="font-semibold mb-2">Explanation:</h3>
-              <p className="text-sm text-muted-foreground">{currentQuestion.explanation}</p>
+              <div className="flex items-start space-x-3">
+                <Beaker className="h-5 w-5 text-blue-600 mt-1" />
+                <div>
+                  <h3 className="font-semibold mb-2 text-blue-800">Explanation:</h3>
+                  <p className="text-sm text-blue-700">{currentQuestion.explanation}</p>
+                  {currentQuestion.reactionType && (
+                    <Badge variant="outline" className="mt-2 bg-blue-100 text-blue-800">
+                      Reaction Type: {currentQuestion.reactionType}
+                    </Badge>
+                  )}
+                </div>
+              </div>
             </CardContent>
           </Card>
         )}
