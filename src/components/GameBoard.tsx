@@ -1,11 +1,14 @@
+
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
-import { Timer, CheckCircle, XCircle, Beaker, Zap } from 'lucide-react';
 import { questionBank, Question } from '@/data/questionBank';
 import { memes } from '@/data/memes';
+import QuestionTimer from './QuestionTimer';
+import QuestionHeader from './QuestionHeader';
+import QuestionDisplay from './QuestionDisplay';
+import AnswerOptions from './AnswerOptions';
+import QuestionExplanation from './QuestionExplanation';
 
 interface GameBoardProps {
   onCorrectAnswer: (points: number, category: string) => void;
@@ -93,33 +96,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ onCorrectAnswer, onWrongAnswer, c
     loadNewQuestion();
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Easy': return 'bg-green-100 text-green-800';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800';
-      case 'Hard': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getAnswerButtonClass = (option: string) => {
-    if (!showResult) {
-      return selectedAnswer === option 
-        ? 'bg-blue-100 border-blue-500 text-blue-700' 
-        : 'hover:bg-gray-50';
-    }
-    
-    if (option === currentQuestion?.correctAnswer) {
-      return 'bg-green-100 border-green-500 text-green-700';
-    }
-    
-    if (option === selectedAnswer && option !== currentQuestion?.correctAnswer) {
-      return 'bg-red-100 border-red-500 text-red-700';
-    }
-    
-    return 'bg-gray-50 text-gray-500';
-  };
-
   if (!currentQuestion) {
     return <div>Loading...</div>;
   }
@@ -127,66 +103,19 @@ const GameBoard: React.FC<GameBoardProps> = ({ onCorrectAnswer, onWrongAnswer, c
   return (
     <Card className="w-full">
       <CardHeader>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <Badge variant="outline">Question {questionNumber}</Badge>
-            <Badge className={getDifficultyColor(currentQuestion.difficulty)}>
-              {currentQuestion.difficulty}
-            </Badge>
-            <Badge variant="secondary">{currentQuestion.topic}</Badge>
-            {currentQuestion.reactionType && (
-              <Badge variant="outline" className="bg-purple-50 text-purple-700">
-                <Beaker className="h-3 w-3 mr-1" />
-                {currentQuestion.reactionType}
-              </Badge>
-            )}
-          </div>
-          <div className="flex items-center space-x-2">
-            <Timer className="h-4 w-4" />
-            <span className={`font-mono ${timeLeft <= 10 ? 'text-red-500' : ''}`}>
-              {timeLeft}s
-            </span>
-          </div>
-        </div>
-        <Progress value={(30 - timeLeft) * (100 / 30)} className="w-full" />
+        <QuestionHeader question={currentQuestion} questionNumber={questionNumber} />
+        <QuestionTimer timeLeft={timeLeft} />
       </CardHeader>
       
       <CardContent className="space-y-6">
-        <div>
-          <CardTitle className="text-lg mb-4">{currentQuestion.question}</CardTitle>
-          {currentQuestion.image && (
-            <img 
-              src={currentQuestion.image} 
-              alt="Question diagram" 
-              className="max-w-full h-auto rounded-lg mb-4"
-            />
-          )}
-        </div>
+        <QuestionDisplay question={currentQuestion} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {currentQuestion.options.map((option, index) => (
-            <Button
-              key={index}
-              variant="outline"
-              className={`p-4 h-auto text-left justify-start ${getAnswerButtonClass(option)}`}
-              onClick={() => handleAnswerSelect(option)}
-              disabled={showResult}
-            >
-              <div className="flex items-center space-x-3">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium">
-                  {String.fromCharCode(65 + index)}
-                </span>
-                <span className="text-sm">{option}</span>
-                {showResult && option === currentQuestion.correctAnswer && (
-                  <CheckCircle className="h-4 w-4 text-green-600 ml-auto" />
-                )}
-                {showResult && option === selectedAnswer && option !== currentQuestion.correctAnswer && (
-                  <XCircle className="h-4 w-4 text-red-600 ml-auto" />
-                )}
-              </div>
-            </Button>
-          ))}
-        </div>
+        <AnswerOptions 
+          question={currentQuestion}
+          selectedAnswer={selectedAnswer}
+          showResult={showResult}
+          onAnswerSelect={handleAnswerSelect}
+        />
 
         {!showResult && (
           <div className="flex space-x-3">
@@ -201,22 +130,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ onCorrectAnswer, onWrongAnswer, c
         )}
 
         {showResult && (
-          <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-l-blue-500">
-            <CardContent className="pt-6">
-              <div className="flex items-start space-x-3">
-                <Beaker className="h-5 w-5 text-blue-600 mt-1" />
-                <div>
-                  <h3 className="font-semibold mb-2 text-blue-800">Explanation:</h3>
-                  <p className="text-sm text-blue-700">{currentQuestion.explanation}</p>
-                  {currentQuestion.reactionType && (
-                    <Badge variant="outline" className="mt-2 bg-blue-100 text-blue-800">
-                      Reaction Type: {currentQuestion.reactionType}
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <QuestionExplanation question={currentQuestion} />
         )}
       </CardContent>
     </Card>
